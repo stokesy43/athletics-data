@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.0\StapeleyDigital.AthleticsData.Api.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="automapper" Version="6.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.0.0-rtm-beta7" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\StapeleyDigital.AthelticsData.Domain\StapeleyDigital.AthelticsData.Domain.csproj" />
+    <ProjectReference Include="..\StapeleyDigital.AthleticsData.Data\StapeleyDigital.AthleticsData.Data.csproj" />
+    <ProjectReference Include="..\StapeleyDigital.AthleticsData.Dto\StapeleyDigital.AthleticsData.Dto.csproj" />
+  </ItemGroup>
+
+  <Target Name="SwaggerFile">
+    <ItemGroup>
+      <_CustomFiles Include="bin\(Configuration)\(Platform)\*.xml" />
+      <FilesForPackagingFromProject Include="%(_CustomFiles.Identity)">
+        <DestinationRelativePath>%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+  </Target>
+
+  <PropertyGroup>
+    <CopyAllFilesToSingleFolderForPackageDependsOn>
+      SwaggerFile;
+      $(CopyAllFilesToSingleFolderForPackageDependsOn);
+    </CopyAllFilesToSingleFolderForPackageDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp2.0\StapeleyDigital.AthleticsData.Api.xml</DocumentationFile>
+  </PropertyGroup>
+  
+</Project>
