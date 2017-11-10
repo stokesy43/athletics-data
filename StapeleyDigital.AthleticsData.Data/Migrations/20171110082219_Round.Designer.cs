@@ -11,9 +11,10 @@ using System;
 namespace StapeleyDigital.AthleticsData.Data.Migrations
 {
     [DbContext(typeof(AthleticsDataContext))]
-    partial class AthleticsDataContextModelSnapshot : ModelSnapshot
+    [Migration("20171110082219_Round")]
+    partial class Round
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,8 +115,6 @@ namespace StapeleyDigital.AthleticsData.Data.Migrations
                     b.Property<int>("EventId");
 
                     b.Property<string>("Gender");
-
-                    b.Property<string>("Operator");
 
                     b.Property<int>("StandardId");
 

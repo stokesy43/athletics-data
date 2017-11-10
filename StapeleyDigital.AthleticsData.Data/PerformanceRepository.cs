@@ -60,8 +60,12 @@ namespace StapeleyDigital.AthleticsData.Data
         public bool PerformanceExists(string powerOf10MeetingId, string powerOf10EventId) => 
             _context.Performances.Any(x => x.Meeting.PowerOf10Id == powerOf10MeetingId && x.Event.PowerOf10Id == powerOf10EventId);
 
-        public bool PerformanceExists(int meetingId, int eventId) => 
-            _context.Performances.Any(x => x.MeetingId == meetingId && x.EventId == eventId);
+        public bool PerformanceExists(int athleteId, int meetingId, int eventId, string round) =>
+            _context.Performances.Any(
+                x => x.AthleteId == athleteId 
+                && x.MeetingId == meetingId 
+                && x.EventId == eventId 
+                && x.Round == round);
 
 
         public bool Save() => (_context.SaveChanges() >= 0);

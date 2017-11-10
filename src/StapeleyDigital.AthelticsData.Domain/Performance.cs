@@ -13,6 +13,7 @@ namespace StapeleyDigital.AthelticsData.Domain
         public string Venue { get; set; }
         public string PerformanceValue { get; set; }
         public string Position { get; set; }
+        public string Round { get; set; }
         
         public virtual Athlete Athlete { get; set; }
         public virtual Event Event { get; set; }

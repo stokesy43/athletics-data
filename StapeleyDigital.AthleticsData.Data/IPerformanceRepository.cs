@@ -21,7 +21,7 @@ namespace StapeleyDigital.AthleticsData.Data
 
         bool PerformanceExists(string powerOf10MeetingId, string powerOf10EventId);
 
-        bool PerformanceExists(int meetingId, int eventId);
+        bool PerformanceExists(int athleteId, int meetingId, int eventId, string round);
 
         bool Save();
     }

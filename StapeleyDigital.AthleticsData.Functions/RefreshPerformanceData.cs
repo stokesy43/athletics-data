@@ -132,6 +132,9 @@ namespace StapeleyDigital.AthleticsData.Functions
                 // Column 10 is position
                 perf.Position = data[9].InnerText;
 
+                // Column 11 is round
+                perf.Round = data[10].InnerText;
+
                 // Column 14 is venue
                 var uri = new Uri(new Uri("http://test.com"), data[13].FirstChild.Attributes["href"].Value);
 

@@ -15,5 +15,6 @@ namespace StapeleyDigital.AthleticsData.Dto
         public string StandardName { get; set; }
         public string MeetingName { get; set; }
         public string PerformanceValue { get; set; }
+        public string Round { get; set; }
     }
 }

@@ -202,7 +202,7 @@ namespace StapeleyDigital.AthleticsData.Api.Controllers
 
                 // Check if the performance exists already
                 // combo of the event id and the meeting id
-                if (_performanceRepository.PerformanceExists(meeting.Id, eventEntity.Id))
+                if (_performanceRepository.PerformanceExists(athleteEntity.Id, meeting.Id, eventEntity.Id, performance.Round))
                 {
                     return StatusCode(409, "Performance already registered with server");
                 }
@@ -251,7 +251,10 @@ namespace StapeleyDigital.AthleticsData.Api.Controllers
                 // Try converting the performance into a double 
                 if (double.TryParse(performance.PerformanceValue, out var result))
                 {
-                    var standardsMet = eventStandards.Where(x => x.Value <= result).Select(x => x.Standard).OrderBy(x => x.Priority);
+                    var standardsMet = eventStandards.Where(x => 
+                        (result <= x.Value && x.Operator == "<") || 
+                        (result >= x.Value && x.Operator == ">")
+                        ).Select(x => x.Standard).OrderBy(x => x.Priority);
 
                     if (standardsMet.Any())
                     {

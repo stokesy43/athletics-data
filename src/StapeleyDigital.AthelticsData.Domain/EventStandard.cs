@@ -9,6 +9,7 @@
         public string Gender { get; set; }
         public double Value { get; set; }
         public string AgeGroup { get; set; }
+        public string Operator { get; set; }
 
         public Event Event { get; set; }
         public Standard Standard { get; set; }

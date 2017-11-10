@@ -11,9 +11,10 @@ using System;
 namespace StapeleyDigital.AthleticsData.Data.Migrations
 {
     [DbContext(typeof(AthleticsDataContext))]
-    partial class AthleticsDataContextModelSnapshot : ModelSnapshot
+    [Migration("20171110092554_EventStandardOperator")]
+    partial class EventStandardOperator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

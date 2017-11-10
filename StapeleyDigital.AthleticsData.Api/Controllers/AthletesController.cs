@@ -17,18 +17,21 @@ namespace StapeleyDigital.AthleticsData.Api.Controllers
         private readonly IAthleteRepository _athleteRepository;
         private readonly IDeviceRepository _deviceRepository;
         private readonly IPerformanceRepository _performanceRepository;
+        private readonly IEventRepository _eventRepository;
         private readonly ILogger<AthletesController> _logger;
         private readonly IMapper _mapper;
 
-        public AthletesController(IAthleteRepository athleteRepository, 
+        public AthletesController(IAthleteRepository athleteRepository,
             IDeviceRepository deviceRepository,
             IPerformanceRepository performanceRepository,
-            ILogger<AthletesController> logger, 
+            IEventRepository eventRepository,
+            ILogger<AthletesController> logger,
             IMapper mapper)
         {
             _athleteRepository = athleteRepository;
             _deviceRepository = deviceRepository;
             _performanceRepository = performanceRepository;
+            _eventRepository = eventRepository;
             _logger = logger;
             _mapper = mapper;
         }
@@ -76,7 +79,7 @@ namespace StapeleyDigital.AthleticsData.Api.Controllers
                     return Ok(results);
                 }
 
-                
+
             }
             catch (Exception ex)
             {
@@ -139,13 +142,15 @@ namespace StapeleyDigital.AthleticsData.Api.Controllers
         /// ]]>
         /// 
         /// </remarks>
+        /// <param name="id">The Identifier for the athlete</param>
+        /// <param name="eventId">Optional Event Filter</param>
         /// <returns>A collection of performances</returns>
         /// <response code="200">Returns the collection of performances</response>
         /// <response code="404">The athlete could not be found</response>
         [HttpGet("{id:int}/performances")]
         [ProducesResponseType(typeof(IEnumerable<PerformanceDto>), 200)]
         [ProducesResponseType(404)]
-        public IActionResult GetPerformancesByAthlete(int id)
+        public IActionResult GetPerformancesByAthlete(int id, int? eventId = null)
         {
             try
             {
@@ -157,6 +162,19 @@ namespace StapeleyDigital.AthleticsData.Api.Controllers
                 }
 
                 var performanceEntities = _performanceRepository.GetPerformancesByAthlete(id);
+
+                if (eventId.HasValue)
+                {
+                    var eventEntity = _eventRepository.GetEvent(eventId.Value);
+
+                    if (eventEntity==null)
+                    {
+                        return NotFound($"Event {eventId} does not exist");
+                    }
+
+                    performanceEntities = performanceEntities.Where(x => x.EventId == eventId.Value);
+                }
+
                 var results = _mapper.Map<IEnumerable<PerformanceDto>>(performanceEntities);
 
                 return Ok(results);
